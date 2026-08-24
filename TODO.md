@@ -7,9 +7,12 @@
 - Cart
 - Mobile menu
 - Announcement bar
+- Multi variant images
 - Category filtering
 - Predictive search
 - Password page
+- Header & Footer styles should be moved to critical
+- Review class names on all exisiting code
 - Go through each template file
 - Review all Dawn settings to see what we might want
 - See how apps work with in general
