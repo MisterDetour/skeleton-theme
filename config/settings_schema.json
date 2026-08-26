@@ -31,15 +31,15 @@
         "label": "t:labels.page_width",
         "options": [
           {
-            "value": "90rem",
+            "value": "120rem",
             "label": "t:options.page_width.narrow"
           },
           {
-            "value": "110rem",
+            "value": "150rem",
             "label": "t:options.page_width.wide"
           }
         ],
-        "default": "90rem"
+        "default": "120rem"
       },
       {
         "type": "range",

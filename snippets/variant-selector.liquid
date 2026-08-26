@@ -1,0 +1,10 @@
+<div>
+  {%- for option in product.options -%}
+    <label for="option-{{ option | handleize }}">{{ option }}</label>
+    <select id="option-{{ option | handleize }}" name="option-{{ option | handleize }}" class="product-option-select">
+      {% for value in product.options_with_values[forloop.index0].values %}
+        <option value="{{ value }}">{{ value }}</option>
+      {% endfor %}
+    </select>
+  {%- endfor -%}
+</div>

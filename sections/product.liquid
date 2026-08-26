@@ -12,45 +12,36 @@
         {% endfor %}
       </div>
     </div>
-    <div class="product-gallery-nav">
-      {% for image in product.images %}
-        <div>
-          {% render 'image', class: 'product-image', image: image, width: 200, height: 200 %}
-        </div>
-      {% endfor %}
+    <div class="product-gallery-nav swiper">
+      <div class="swiper-wrapper">
+        {% for image in product.images %}
+          <div class="swiper-slide" data-index="{{ forloop.index0 }}">
+            {% render 'image', class: 'product-image', image: image, width: 200, height: 200 %}
+          </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
   <div>
     <div class="product-main-info">
-      <h1>{{ product.title }}</h1>
-      <p>{{ product.price | money }}</p>
-      <p>{{ product.description }}</p>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+          {%- when 'title' -%}
+            <h1>{{ product.title }}</h1>
+          {%- when 'description' -%}
+            <div class="product-description">{{ product.description }}</div>
+          {%- when 'price' -%}
+            <div class="product-price">{{ product.selected_or_first_available_variant.price | money }}</div>
+          {%- when 'form' -%}
+            {% render 'product-form', product: product %}
+          {%- when 'variant_selector' -%}
+            {% render 'variant-selector', product: product %}
+        {%- endcase -%}
+      {%- endfor -%}
     </div>
   </div>
-</div>
-
-<div class="product-form">
-  {% form 'product', product %}
-    {% assign current_variant = product.selected_or_first_available_variant %}
-
-    <select name="id">
-      {% for variant in product.variants %}
-        <option
-          value="{{ variant.id }}"
-          {% if variant == current_variant %}
-            selected="selected"
-          {% endif %}
-        >
-          {{ variant.title }} - {{ variant.price | money }}
-        </option>
-      {% endfor %}
-    </select>
-
-    <input type="text" name="quantity" min="1" value="1">
-
-    <input type="submit" value="Add to cart">
-    {{ form | payment_button }}
-  {% endform %}
 </div>
 
 {% stylesheet %}
@@ -61,27 +52,111 @@
   }
 
   .product-gallery-nav {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 10rem);
-    gap: 1rem;
     margin-top: 1rem;
+  }
+
+  .product-gallery-nav .swiper-slide {
+    width: 10rem;
+    cursor: pointer;
   }
 {% endstylesheet %}
 
-{% javascript %}
+<script>
   document.addEventListener('DOMContentLoaded', function () {
-    new Swiper('.product-images', {
+    const gallery = new Swiper('.product-gallery', {
       slidesPerView: 1,
+      allowTouchMove: true,
+    });
+
+    const galleryNav = new Swiper('.product-gallery-nav', {
+      slidesPerView: 'auto',
+      spaceBetween: 12,
+      watchSlidesProgress: true,
+    });
+
+    // Sync gallery with navigation
+    document.querySelectorAll('.product-gallery-nav .swiper-slide').forEach((slide) => {
+      slide.addEventListener('click', function () {
+        const index = Number(this.dataset.index);
+
+        if (!Number.isNaN(index)) {
+          gallery.slideTo(index);
+        }
+      });
+    });
+
+    // Update price on variant change
+    const productVariants = {{ product.variants | json }};
+    const variantSelect = document.querySelector('.product-form .product-variant-select');
+    const priceEl = document.querySelector('.product-price');
+    const moneyFormat = {{ shop.money_format | json }};
+
+    function formatMoney(cents) {
+      if (window.Shopify && typeof Shopify.formatMoney === 'function') {
+        return Shopify.formatMoney(cents, moneyFormat);
+      }
+
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    function updateProductPrice() {
+      if (!variantSelect || !priceEl) return;
+
+      const selectedVariant = productVariants.find((variant) => Number(variant.id) === Number(variantSelect.value));
+
+      if (!selectedVariant) return;
+
+      priceEl.textContent = formatMoney(selectedVariant.price);
+    }
+
+    if (variantSelect) {
+      variantSelect.addEventListener('change', updateProductPrice);
+    }
+
+    document.querySelectorAll('.product-option-select').forEach((select) => {
+      select.addEventListener('change', () => {
+        alert('test');
+      });
     });
   });
-{% endjavascript %}
+</script>
 
 {% schema %}
 {
-  "name": "t:general.product",
+  "name": "Product",
   "settings": [],
   "disabled_on": {
     "groups": ["header", "footer"]
-  }
+  },
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "form",
+      "name": "Product Form",
+      "limit": 1
+    },
+    {
+      "type": "variant_selector",
+      "name": "Variant Selector",
+      "limit": 1
+    }
+  ]
 }
 {% endschema %}

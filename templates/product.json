@@ -11,6 +11,35 @@
   "sections": {
     "main": {
       "type": "product",
+      "blocks": {
+        "title_4eBUym": {
+          "type": "title",
+          "settings": {}
+        },
+        "description_iBVXD6": {
+          "type": "description",
+          "settings": {}
+        },
+        "price_drzA33": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_selector_QdpqhD": {
+          "type": "variant_selector",
+          "settings": {}
+        },
+        "form_XXfMhU": {
+          "type": "form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title_4eBUym",
+        "description_iBVXD6",
+        "price_drzA33",
+        "variant_selector_QdpqhD",
+        "form_XXfMhU"
+      ],
       "settings": {}
     }
   },

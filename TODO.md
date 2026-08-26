@@ -1,7 +1,8 @@
 # To Dos
 
-- PDP
+- PDP 
 - Clean up existing files & code
+- Color swatches
 - Cart drawer
 - Collection (quick add to cart)
 - Cart
@@ -14,7 +15,10 @@
 - Header & Footer styles should be moved to critical
 - Review class names on all exisiting code
 - Go through each template file
+- Multiple currencies/markets
 - Review all Dawn settings to see what we might want
 - See how apps work with in general
 - Theme Blocks https://shopify.dev/docs/storefronts/themes/architecture/blocks/theme-blocks/quick-start?framework=liquid
 - Modify readme
+- Work on performance
+- html validation
