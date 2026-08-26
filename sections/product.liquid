@@ -62,7 +62,7 @@
 {% endstylesheet %}
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', () => {
     const gallery = new Swiper('.product-gallery', {
       slidesPerView: 1,
       allowTouchMove: true,
@@ -76,7 +76,7 @@
 
     // Sync gallery with navigation
     document.querySelectorAll('.product-gallery-nav .swiper-slide').forEach((slide) => {
-      slide.addEventListener('click', function () {
+      slide.addEventListener('click', () => {
         const index = Number(this.dataset.index);
 
         if (!Number.isNaN(index)) {
@@ -132,10 +132,49 @@
       select.addEventListener('change', updateVariantFromOptions);
     });
 
-    document.querySelector('.product-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Form submitted');
-    });
+    // Add to cart functionality
+    const productForm = document.querySelector('.product-form form');
+
+    if (productForm) {
+      productForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitButton = productForm.querySelector('.submit');
+        const originalButtonText = submitButton.value;
+
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.value = 'Adding...';
+        }
+
+        try {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            body: new FormData(productForm),
+          });
+
+          if (!response.ok) {
+            throw new Error('Unable to add item to cart.');
+          }
+
+          if (submitButton) {
+            submitButton.value = originalButtonText;
+            submitButton.disabled = false;
+          }
+
+          document.querySelector('.cart-drawer-container').classList.add('active');
+        } catch (error) {
+          console.error(error);
+
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.value = originalButtonText;
+          }
+
+          alert('There was a problem adding this item to the cart. Please try again.');
+        }
+      });
+    }
   });
 </script>
 

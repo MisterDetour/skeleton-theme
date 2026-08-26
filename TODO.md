@@ -2,6 +2,8 @@
 
 - Cart drawer (add setting to turn on/off)
 - Clean up existing files & code
+- Cart icon in header needs to update count on ajax add to cart
+- Open cart drawer when clicking on cart icon in header
 - Color swatches
 - Collection (quick add to cart)
 - Cart
