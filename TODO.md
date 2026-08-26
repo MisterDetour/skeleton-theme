@@ -1,9 +1,8 @@
 # To Dos
 
-- PDP 
+- Cart drawer (add setting to turn on/off)
 - Clean up existing files & code
 - Color swatches
-- Cart drawer
 - Collection (quick add to cart)
 - Cart
 - Mobile menu
@@ -14,7 +13,7 @@
 - Password page
 - Header & Footer styles should be moved to critical
 - Review class names on all exisiting code
-- Go through each template file
+- Go through each template file - https://shopify.dev/docs/storefronts/themes/architecture/templates
 - Multiple currencies/markets
 - Review all Dawn settings to see what we might want
 - See how apps work with in general

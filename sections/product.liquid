@@ -113,10 +113,28 @@
       variantSelect.addEventListener('change', updateProductPrice);
     }
 
-    document.querySelectorAll('.product-option-select').forEach((select) => {
-      select.addEventListener('change', () => {
-        alert('test');
+    // Update variant based on selected options
+    function updateVariantFromOptions() {
+      const selectedOptions = Array.from(document.querySelectorAll('.product-option-select')).map((select) => select.value);
+
+      const matchingVariant = productVariants.find((variant) => {
+        return variant.options && variant.options.length === selectedOptions.length &&
+          variant.options.every((option, index) => option === selectedOptions[index]);
       });
+
+      if (!matchingVariant) return;
+
+      variantSelect.value = String(matchingVariant.id);
+      updateProductPrice();
+    }
+
+    document.querySelectorAll('.product-option-select').forEach((select) => {
+      select.addEventListener('change', updateVariantFromOptions);
+    });
+
+    document.querySelector('.product-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Form submitted');
     });
   });
 </script>
