@@ -1,11 +1,9 @@
 # To Dos
 
-- Figure out translation stuff - config & locales
-- Clean up existing files & code
-- Cart drawer (add setting to turn on/off)
 - Cart quantity isn't correct after ajax add
 - Cart icon in header needs to update count on ajax add to cart
 - Open cart drawer when clicking on cart icon in header
+- Add checkout button to cart drawer
 - Color swatches
 - Collection (quick add to cart)
 - Cart
@@ -30,3 +28,10 @@
 - Image sizes attributes
 - Remove comments from main layout file?
 - Add title elements to svg's
+- Themecheck workflow not working
+- Decide whether or not to use the main layout grid in critical.css
+- Compare at prices
+
+# Implement more fully
+
+- Cart drawer

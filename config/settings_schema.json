@@ -79,5 +79,16 @@
         "default": 4
       }
     ]
+  },
+  {
+    "name": "t:general.cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_drawer",
+        "default": true,
+        "label": "t:labels.cart_drawer"
+      }
+    ]
   }
 ]

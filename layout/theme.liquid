@@ -31,7 +31,9 @@
 
     {{ content_for_layout }}
 
-    {%- render 'cart-drawer' -%}
+    {%- if settings.cart_drawer -%}
+      {% render 'cart-drawer' %}
+    {% endif %}
 
     {% sections 'footer-group' %}
   </body>

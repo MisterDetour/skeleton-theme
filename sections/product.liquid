@@ -146,50 +146,6 @@
     document.querySelectorAll('.product-option-select').forEach((select) => {
       select.addEventListener('change', updateVariantFromOptions);
     });
-
-    // Add to cart functionality
-    const productForm = document.querySelector('.product-form form');
-
-    if (productForm) {
-      productForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const submitButton = productForm.querySelector('.submit');
-        const originalButtonText = submitButton.value;
-
-        if (submitButton) {
-          submitButton.disabled = true;
-          submitButton.value = 'Adding...';
-        }
-
-        try {
-          const response = await fetch('/cart/add.js', {
-            method: 'POST',
-            body: new FormData(productForm),
-          });
-
-          if (!response.ok) {
-            throw new Error('Unable to add item to cart.');
-          }
-
-          if (submitButton) {
-            submitButton.value = originalButtonText;
-            submitButton.disabled = false;
-          }
-
-          document.querySelector('.cart-drawer-container').classList.add('active');
-        } catch (error) {
-          console.error(error);
-
-          if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.value = originalButtonText;
-          }
-
-          alert('There was a problem adding this item to the cart. Please try again.');
-        }
-      });
-    }
   });
 {% endjavascript %}
 
