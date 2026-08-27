@@ -1,6 +1,5 @@
 # To Dos
 
-- Cart quantity isn't correct after ajax add
 - Cart icon in header needs to update count on ajax add to cart
 - Open cart drawer when clicking on cart icon in header
 - Add checkout button to cart drawer
