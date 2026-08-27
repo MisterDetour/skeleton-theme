@@ -1,7 +1,7 @@
 # To Dos
 
-- Add close button to cart drawer
-- Add checkout button to cart drawer
+- Add checkout button and totals to cart drawer
+- Discount codes support in carts
 - Color swatches
 - Collection (quick add to cart)
 - Cart
@@ -30,7 +30,8 @@
 - Decide whether or not to use the main layout grid in critical.css
 - Compare at prices
 - Responsive cart drawer styles
+- Work on accessability
 
 # Implement more fully
 
-- Cart drawer
+- Cart drawer (basic styles - quantity update & delete functionality)

@@ -1,25 +1,33 @@
 <div class="cart-drawer-container">
   <div class="cart-drawer">
-    {% if cart.item_count > 0 %}
-      <ul>
-        {% for item in cart.items %}
-          <li>
-            {% if item.image %}
-              {% render 'image', image: item.image, url: item.url, width: 120, height: 120, crop: 'center' %}
-            {% endif %}
+    <button class="cart-drawer-close" aria-label="Close cart drawer">X</button>
 
-            <div>
-              <h3>{{ item.product.title }}</h3>
-              <p>{{ item.variant.title }}</p>
-              <p>{{ item.price | money }}</p>
-              <p>Qty: {{ item.quantity }}</p>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>Your cart is empty.</p>
-    {% endif %}
+    <div class="cart-drawer-contents">
+      {% if cart.item_count > 0 %}
+        <ul>
+          {% for item in cart.items %}
+            <li>
+              {% if item.image %}
+                {% render 'image', image: item.image, url: item.url, width: 120, height: 120, crop: 'center' %}
+              {% endif %}
+
+              <div>
+                <h3>{{ item.product.title }}</h3>
+                <p>{{ item.variant.title }}</p>
+                <p>{{ item.price | money }}</p>
+                <p>Qty: {{ item.quantity }}</p>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>Your cart is empty.</p>
+      {% endif %}
+    </div>
+    <div class="cart-drawer-footer">
+      <p>Total: {{ cart.total_price | money }}</p>
+      <a href="{{ routes.checkout_url }}" class="cart-drawer-checkout">Checkout</a>
+    </div>
   </div>
 </div>
 
@@ -60,6 +68,10 @@
   .cart-drawer-container.active .cart-drawer {
     transform: translate(0);
   }
+
+  .cart-drawer-close {
+    cursor: pointer;
+  }
 {% endstylesheet %}
 
 {% javascript %}
@@ -69,6 +81,11 @@
       if (e.target === document.querySelector('.cart-drawer-container')) {
         document.querySelector('.cart-drawer-container').classList.remove('active');
       }
+    });
+
+    // Close button
+    document.querySelector('.cart-drawer-close').addEventListener('click', () => {
+      document.querySelector('.cart-drawer-container').classList.remove('active');
     });
 
     // Update cart drawer contents asynchronously
@@ -82,8 +99,8 @@
 
         const parser = new DOMParser();
         const parsedHtml = parser.parseFromString(sectionHtml, 'text/html');
-        const innerDrawer = parsedHtml.querySelector('.cart-drawer');
-        const updateTarget = document.querySelector('.cart-drawer');
+        const innerDrawer = parsedHtml.querySelector('.cart-drawer-contents');
+        const updateTarget = document.querySelector('.cart-drawer-contents');
 
         if (innerDrawer && updateTarget) {
           updateTarget.innerHTML = innerDrawer.innerHTML;
@@ -111,54 +128,56 @@
       }
     };
 
+    // Ajax add to cart
     const productForm = document.querySelector('.product-form form');
 
-    // Ajax add to cart
-    productForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    if (productForm) {
+      productForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-      const submitButton = productForm.querySelector('.submit');
-      const originalButtonText = submitButton.value;
-
-      if (submitButton) {
-        submitButton.disabled = true;
-        submitButton.value = 'Adding...';
-      }
-
-      try {
-        const response = await fetch('/cart/add.js', {
-          method: 'POST',
-          body: new FormData(productForm),
-        });
-
-        if (!response.ok) {
-          throw new Error('Unable to add item to cart.');
-        }
-
-        const activeDrawer = document.querySelector('.cart-drawer-container');
-
-        if (activeDrawer) {
-          activeDrawer.classList.add('active');
-        }
+        const submitButton = productForm.querySelector('.submit');
+        const originalButtonText = submitButton.value;
 
         if (submitButton) {
-          submitButton.value = originalButtonText;
-          submitButton.disabled = false;
+          submitButton.disabled = true;
+          submitButton.value = 'Adding...';
         }
 
-        refreshCartDrawer();
-        refreshCartCounts();
-      } catch (error) {
-        console.error(error);
+        try {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            body: new FormData(productForm),
+          });
 
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.value = originalButtonText;
+          if (!response.ok) {
+            throw new Error('Unable to add item to cart.');
+          }
+
+          const activeDrawer = document.querySelector('.cart-drawer-container');
+
+          if (activeDrawer) {
+            activeDrawer.classList.add('active');
+          }
+
+          if (submitButton) {
+            submitButton.value = originalButtonText;
+            submitButton.disabled = false;
+          }
+
+          refreshCartDrawer();
+          refreshCartCounts();
+        } catch (error) {
+          console.error(error);
+
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.value = originalButtonText;
+          }
+
+          alert('There was a problem adding this item to the cart. Please try again.');
         }
-
-        alert('There was a problem adding this item to the cart. Please try again.');
-      }
-    });
+      });
+    }
 
     // Toggle cart drawer on cart icon click
     const cartToggle = document.querySelector('.cart-toggle');
@@ -178,7 +197,7 @@
 
 {% schema %}
 {
-  "name": "Cart drawer",
+  "name": "t.general.cart_drawer",
   "settings": []
 }
 {% endschema %}

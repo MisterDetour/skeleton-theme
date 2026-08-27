@@ -87,7 +87,7 @@
         "type": "checkbox",
         "id": "cart_drawer",
         "default": true,
-        "label": "t:labels.cart_drawer"
+        "label": "t:general.cart_drawer"
       }
     ]
   }

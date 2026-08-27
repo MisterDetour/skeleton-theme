@@ -5,6 +5,7 @@
     "block": "Block",
     "blog": "Blog",
     "cart": "Cart",
+    "cart_drawer": "Cart drawer",
     "collection": "Collection",
     "collections": "Collections",
     "collection_card": "Collection card",
@@ -36,7 +37,6 @@
   "labels": {
     "alignment": "Alignment",
     "background": "Background",
-    "cart_drawer": "Cart drawer",
     "foreground": "Foreground",
     "grid_gap": "Grid spacing",
     "grid_item_width": "Grid item width",
