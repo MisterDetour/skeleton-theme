@@ -24,7 +24,7 @@
       </shopify-account>
     {% endif %}
 
-    <a href="{{ routes.cart_url }}">
+    <a href="{{ routes.cart_url }}" class="cart-toggle">
       {% if cart.item_count > 0 %}
         <sup class="cart-item-count">{{ cart.item_count }}</sup>
       {% endif %}

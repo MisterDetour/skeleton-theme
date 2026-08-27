@@ -159,6 +159,20 @@
         alert('There was a problem adding this item to the cart. Please try again.');
       }
     });
+
+    // Toggle cart drawer on cart icon click
+    const cartToggle = document.querySelector('.cart-toggle');
+
+    if (cartToggle) {
+      cartToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const drawer = document.querySelector('.cart-drawer-container');
+
+        if (drawer) {
+          drawer.classList.toggle('active');
+        }
+      });
+    }
   });
 {% endjavascript %}
 

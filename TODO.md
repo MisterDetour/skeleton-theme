@@ -1,7 +1,6 @@
 # To Dos
 
-- Cart icon in header needs to update count on ajax add to cart
-- Open cart drawer when clicking on cart icon in header
+- Add close button to cart drawer
 - Add checkout button to cart drawer
 - Color swatches
 - Collection (quick add to cart)
@@ -12,7 +11,7 @@
 - Category filtering
 - Predictive search
 - Password page
-- Header & Footer styles should be moved to critical
+- Header & Footer styles should be moved to critical - also cart drawer
 - Review class names on all exisiting code
 - Go through each template file - https://shopify.dev/docs/storefronts/themes/architecture/templates
 - Multiple currencies/markets
