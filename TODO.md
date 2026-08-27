@@ -1,7 +1,9 @@
 # To Dos
 
-- Cart drawer (add setting to turn on/off)
+- Figure out translation stuff - config & locales
 - Clean up existing files & code
+- Cart drawer (add setting to turn on/off)
+- Cart quantity isn't correct after ajax add
 - Cart icon in header needs to update count on ajax add to cart
 - Open cart drawer when clicking on cart icon in header
 - Color swatches
@@ -19,7 +21,12 @@
 - Multiple currencies/markets
 - Review all Dawn settings to see what we might want
 - See how apps work with in general
-- Theme Blocks https://shopify.dev/docs/storefronts/themes/architecture/blocks/theme-blocks/quick-start?framework=liquid
+- Theme Blocks https://shopify.dev/docs/storefronts/themes/architecture/blocks/theme-blocks/quick-start?framework=liquid (deal with custom-section.liquid & blocks folder)
 - Modify readme
 - Work on performance
 - html validation
+- Custom solution for product gallery instead of swiper?
+- Make sure all section previews work
+- Image sizes attributes
+- Remove comments from main layout file?
+- Add title elements to svg's

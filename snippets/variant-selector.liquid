@@ -1,4 +1,4 @@
-<div>
+<div class="product-option">
   {%- for option in product.options -%}
     <label for="option-{{ option | handleize }}">{{ option }}</label>
     <select id="option-{{ option | handleize }}" name="option-{{ option | handleize }}" class="product-option-select">

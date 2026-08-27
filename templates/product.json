@@ -12,33 +12,33 @@
     "main": {
       "type": "product",
       "blocks": {
-        "title_4eBUym": {
+        "title": {
           "type": "title",
           "settings": {}
         },
-        "description_iBVXD6": {
+        "description": {
           "type": "description",
           "settings": {}
         },
-        "price_drzA33": {
+        "price": {
           "type": "price",
           "settings": {}
         },
-        "variant_selector_QdpqhD": {
+        "variant_selector": {
           "type": "variant_selector",
           "settings": {}
         },
-        "form_XXfMhU": {
+        "form": {
           "type": "form",
           "settings": {}
         }
       },
       "block_order": [
-        "title_4eBUym",
-        "description_iBVXD6",
-        "price_drzA33",
-        "variant_selector_QdpqhD",
-        "form_XXfMhU"
+        "title",
+        "description",
+        "price",
+        "variant_selector",
+        "form"
       ],
       "settings": {}
     }

@@ -8,7 +8,7 @@
     <a class="collection-card" href="{{ collection.url }}">
       {% if collection.featured_image %}
         {% render 'image',
-          class: 'collection-card__image',
+          class: 'collection-card-image',
           image: collection.featured_image,
           width: 600,
           height: 600,
@@ -16,7 +16,7 @@
         %}
       {% endif %}
 
-      <div class="collection-card__content">
+      <div class="collection-card-content">
         <p>{{ collection.title }}</p>
 
         {% if collection.description %}
@@ -33,12 +33,15 @@
     grid-template-columns: repeat(auto-fill, minmax(min(var(--collection-card-size), 100%), 1fr));
     gap: var(--grid-gap);
   }
-  .collections--compact {
+
+  .collections-compact {
     --collection-card-size: 160px;
   }
-  .collections--full {
+
+  .collections-full {
     --collection-card-size: 280px;
   }
+
   .collection-card {
     display: flex;
     flex-direction: column;
@@ -55,10 +58,10 @@
       "id": "grid_item_width",
       "label": "t:labels.grid_item_width",
       "options": [
-        { "value": "collections--compact", "label": "t:options.size.small" },
-        { "value": "collections--full", "label": "t:options.size.large" }
+        { "value": "collections-compact", "label": "t:options.size.small" },
+        { "value": "collections-full", "label": "t:options.size.large" }
       ],
-      "default": "collections--full"
+      "default": "collections-full"
     },
     {
       "type": "range",

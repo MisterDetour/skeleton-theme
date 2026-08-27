@@ -61,7 +61,14 @@
   }
 {% endstylesheet %}
 
-<script>
+<script type="application/json" id="product-data">
+  {
+    "variants": {{ product.variants | json }},
+    "moneyFormat": {{ shop.money_format | json }}
+  }
+</script>
+
+{% javascript %}
   document.addEventListener('DOMContentLoaded', () => {
     const gallery = new Swiper('.product-gallery', {
       slidesPerView: 1,
@@ -74,9 +81,9 @@
       watchSlidesProgress: true,
     });
 
-    // Sync gallery with navigation
+    // Gallery thumbnail navigation
     document.querySelectorAll('.product-gallery-nav .swiper-slide').forEach((slide) => {
-      slide.addEventListener('click', () => {
+      slide.addEventListener('click', function () {
         const index = Number(this.dataset.index);
 
         if (!Number.isNaN(index)) {
@@ -86,10 +93,13 @@
     });
 
     // Update price on variant change
-    const productVariants = {{ product.variants | json }};
+    const productDataEl = document.getElementById('product-data');
+    const productData = productDataEl ? JSON.parse(productDataEl.textContent) : { variants: [], moneyFormat: '$' };
+    const productVariants = productData.variants || [];
+
     const variantSelect = document.querySelector('.product-form .product-variant-select');
     const priceEl = document.querySelector('.product-price');
-    const moneyFormat = {{ shop.money_format | json }};
+    const moneyFormat = productData.moneyFormat || '$';
 
     function formatMoney(cents) {
       if (window.Shopify && typeof Shopify.formatMoney === 'function') {
@@ -115,11 +125,16 @@
 
     // Update variant based on selected options
     function updateVariantFromOptions() {
-      const selectedOptions = Array.from(document.querySelectorAll('.product-option-select')).map((select) => select.value);
+      const selectedOptions = Array.from(document.querySelectorAll('.product-option-select')).map(
+        (select) => select.value
+      );
 
       const matchingVariant = productVariants.find((variant) => {
-        return variant.options && variant.options.length === selectedOptions.length &&
-          variant.options.every((option, index) => option === selectedOptions[index]);
+        return (
+          variant.options &&
+          variant.options.length === selectedOptions.length &&
+          variant.options.every((option, index) => option === selectedOptions[index])
+        );
       });
 
       if (!matchingVariant) return;
@@ -176,11 +191,11 @@
       });
     }
   });
-</script>
+{% endjavascript %}
 
 {% schema %}
 {
-  "name": "Product",
+  "name": "t:general.product",
   "settings": [],
   "disabled_on": {
     "groups": ["header", "footer"]
