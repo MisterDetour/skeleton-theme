@@ -32,7 +32,7 @@
     {{ content_for_layout }}
 
     {%- if settings.cart_drawer -%}
-      {% render 'cart-drawer' %}
+      {% section 'cart-drawer' %}
     {% endif %}
 
     {% sections 'footer-group' %}

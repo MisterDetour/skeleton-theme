@@ -31,6 +31,7 @@
 - Themecheck workflow not working
 - Decide whether or not to use the main layout grid in critical.css
 - Compare at prices
+- Responsive cart drawer styles
 
 # Implement more fully
 
