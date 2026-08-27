@@ -93,6 +93,24 @@
       }
     };
 
+    // Update cart count asynchronously
+    const refreshCartCounts = async () => {
+      try {
+        const response = await fetch('/cart.js');
+        if (!response.ok) throw new Error('Unable to refresh cart count.');
+
+        const cart = await response.json();
+
+        const updateTargets = document.querySelectorAll('.cart-item-count');
+
+        updateTargets.forEach((target) => {
+          target.textContent = cart.item_count;
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     const productForm = document.querySelector('.product-form form');
 
     // Ajax add to cart
@@ -128,7 +146,8 @@
           submitButton.disabled = false;
         }
 
-        await refreshCartDrawer();
+        refreshCartDrawer();
+        refreshCartCounts();
       } catch (error) {
         console.error(error);
 
