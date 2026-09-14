@@ -1,6 +1,8 @@
 # To Dos
 
 - Add checkout button and totals to cart drawer
+- Global css/js - Header & Footer styles should be moved to critical - also cart drawer
+- Can currently add more than Add-to-cart limit - also check for out of stock
 - Discount codes support in carts
 - Color swatches
 - Collection (quick add to cart)
@@ -10,8 +12,6 @@
 - Multi variant images
 - Category filtering
 - Predictive search
-- Password page
-- Header & Footer styles should be moved to critical - also cart drawer
 - Review class names on all exisiting code
 - Go through each template file - https://shopify.dev/docs/storefronts/themes/architecture/templates
 - Multiple currencies/markets
@@ -35,3 +35,4 @@
 # Implement more fully
 
 - Cart drawer (basic styles - quantity update & delete functionality)
+- Password page

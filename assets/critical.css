@@ -117,3 +117,20 @@ body {
 .shopify-section > .full-width {
   grid-column: 1 / -1;
 }
+
+.btn-reset {
+  padding: 0;
+  border: none;
+  appearance: none;
+  background: none;
+}
+
+.list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
