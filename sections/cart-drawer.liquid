@@ -79,7 +79,7 @@
   </div>
 </div>
 
-{% stylesheet %}
+{% style %}
   .cart-drawer-container {
     visibility: hidden;
     position: fixed;
@@ -225,9 +225,9 @@
     margin-top: 1rem;
     border-top: 0.1rem solid rgba(0, 0, 0, 0.2);
   }
-{% endstylesheet %}
+{% endstyle %}
 
-{% javascript %}
+<script>
   document.addEventListener('DOMContentLoaded', () => {
     // Close cart drawer when clicking outside of it
     document.querySelector('.cart-drawer-container').addEventListener('click', (e) => {
@@ -452,7 +452,7 @@
       });
     }
   });
-{% endjavascript %}
+</script>
 
 {% schema %}
 {
