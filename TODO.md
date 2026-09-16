@@ -1,7 +1,5 @@
 # MVP
 
-- Mobile menu
-- Responsive images
 - Can currently add more than Add-to-cart limit - also check for out of stock
 - Quick html validation & performance check
 
@@ -30,17 +28,20 @@
 # Sections
 
 - Cart drawer (should css/js go in global?)
+- Mobile menu
 - Announcement bar
 
 # Various
 
+- Potential global js - header.liquid
+- Replace icons with consistent library
 - Multi variant images
 - Discount codes support in carts
 - Quick add on collection pages 
 - Review all Dawn settings to see what we might want
 - Theme Blocks https://shopify.dev/docs/storefronts/themes/architecture/blocks/theme-blocks/quick-start?framework=liquid (deal with custom-section.liquid & blocks folder)
 - Modify readme
-- Work on performance
+- Work on performance https://shopify.dev/docs/storefronts/themes/best-practices
 - html validation
 - Custom solution for product gallery instead of swiper?
 - Make sure all section previews work
@@ -49,4 +50,4 @@
 - Decide whether or not to use the main layout grid in critical.css
 - Compare at prices
 - Responsive cart drawer styles
-- Work on accessability
+- Work on accessability https://shopify.dev/docs/storefronts/themes/best-practices

@@ -5,7 +5,13 @@
     {% for product in collection.products %}
       <div class="collection-product">
         {% if product.featured_image %}
-          {% render 'image', image: product.featured_image, url: product.url, width: 400, height: 400, crop: 'center' %}
+          {% render 'image',
+            image: product.featured_image,
+            url: product.url,
+            width: 1000,
+            height: 1000,
+            crop: 'center'
+          %}
         {% endif %}
         <div class="collection-product-content">
           <p>{{ product.title | escape | link_to: product.url }}</p>

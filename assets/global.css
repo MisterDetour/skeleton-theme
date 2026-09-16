@@ -110,6 +110,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  z-index: 2;
 }
 
 .site-header a {
@@ -132,10 +134,76 @@ body {
   width: 3rem;
 }
 
-.site-nav,
+@media (max-width: 768px) {
+  .site-nav {
+    position: absolute;
+    left: calc(-1 * var(--page-margin));
+    top: 100%;
+    background: var(--color-background);
+    width: calc(100% + (2 * var(--page-margin)));
+    height: calc(100vh - 50px);
+    visibility: hidden;
+    transform: translate(-100%);
+    padding: 0 var(--page-margin);
+    transition:
+      transform 0.2s ease,
+      visibility 0.2s ease;
+  }
+
+  .site-nav.open {
+    visibility: visible;
+    transform: translate(0);
+  }
+}
+
+.site-nav-menu,
 .site-header-icons {
   display: flex;
   gap: 1rem;
+}
+
+.site-header-icons shopify-store {
+  display: none;
+}
+
+.site-nav-menu {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@media (min-width: 769px) {
+  .site-nav-menu {
+    flex-direction: row;
+  }
+}
+
+.site-nav-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 769px) {
+  .site-nav-toggle {
+    display: none;
+  }
+}
+
+.site-nav-toggle .icon-hamburger {
+  width: 2.5rem;
+}
+
+.site-nav-toggle .icon-close {
+  display: none;
+}
+
+.site-nav.open + .site-header-icons .icon-close {
+  display: block;
+}
+
+.site-nav.open + .site-header-icons .icon-hamburger {
+  display: none;
 }
 
 /* --------------- Site Footer --------------- */
@@ -174,4 +242,16 @@ body {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .hide-sm {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .hide-md {
+    display: none;
+  }
 }
