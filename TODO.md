@@ -1,8 +1,3 @@
-# MVP
-
-- Can currently add more than Add-to-cart limit - also check for out of stock
-- Quick html validation & performance check
-
 # Complex Functionality To Check For Feasability
 
 - Color swatches
@@ -33,6 +28,7 @@
 
 # Various
 
+- Add to cart errors should be show on page rather than in js alert
 - Potential global js - header.liquid
 - Replace icons with consistent library
 - Multi variant images

@@ -401,9 +401,25 @@
         }
 
         try {
+          const variantSelect = productForm.querySelector('[name="id"]');
+          const quantityInput = productForm.querySelector('[name="quantity"]');
+          const selectedVariantId = variantSelect ? Number(variantSelect.value) : null;
+          const requestedQuantity = quantityInput ? Number(quantityInput.value) : 1;
+
+          const requestBody = {
+            items: [
+              {
+                id: selectedVariantId,
+                quantity: requestedQuantity,
+              },
+            ],
+          };
           const response = await fetch('/cart/add.js', {
             method: 'POST',
-            body: new FormData(productForm),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
           });
 
           if (!response.ok) {
