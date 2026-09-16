@@ -1,10 +1,12 @@
-# Complex Functionality To Check For Feasability
+
+
+# Complex Functionality
 
 - Color swatches
 - Category filtering
 - Predictive search
 - Multiple currencies/markets
-- See how apps work with in general
+- Subscription app support
 
 # Templates https://shopify.dev/docs/storefronts/themes/architecture/templates
 
