@@ -125,9 +125,19 @@ body {
 
 .site-header a sup {
   position: absolute;
-  left: 100%;
+  right: 0;
+  bottom: 0;
   overflow: hidden;
   max-width: var(--page-margin);
+  font-size: 1rem;
+  background: var(--color-foreground);
+  color: white;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
 }
 
 .site-header svg {
@@ -242,6 +252,10 @@ body {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.hidden {
+  display: none !important;
 }
 
 @media (max-width: 768px) {

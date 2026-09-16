@@ -32,10 +32,7 @@
     {% endif %}
 
     <a href="{{ routes.cart_url }}" class="cart-toggle">
-      {% if cart.item_count > 0 %}
-        <sup class="cart-item-count">{{ cart.item_count }}</sup>
-      {% endif %}
-
+      <sup class="cart-item-count {% if cart.item_count == 0 %}hidden{% endif %}">{{ cart.item_count }}</sup>
       {{ 'icon-cart.svg' | inline_asset_content }}
     </a>
   </div>

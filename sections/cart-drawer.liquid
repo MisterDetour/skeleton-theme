@@ -283,6 +283,11 @@
 
         updateTargets.forEach((target) => {
           target.textContent = cart.item_count;
+          if (cart.item_count > 0) {
+            target.classList.remove('hidden');
+          } else {
+            target.classList.add('hidden');
+          }
         });
       } catch (error) {
         console.error(error);
