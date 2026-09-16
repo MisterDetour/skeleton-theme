@@ -133,7 +133,7 @@ body {
 }
 
 .site-nav,
-.header-icons {
+.site-header-icons {
   display: flex;
   gap: 1rem;
 }

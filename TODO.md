@@ -1,38 +1,52 @@
-# To Dos
+# MVP
 
-- Add checkout button and totals to cart drawer
-- Global css/js - Header & Footer styles should be moved to critical - also cart drawer
-- Can currently add more than Add-to-cart limit - also check for out of stock
-- Discount codes support in carts
-- Color swatches
-- Collection (quick add to cart)
-- Cart
 - Mobile menu
-- Announcement bar
-- Multi variant images
+- Responsive images
+- Can currently add more than Add-to-cart limit - also check for out of stock
+- Quick html validation & performance check
+
+# Complex Functionality To Check For Feasability
+
+- Color swatches
 - Category filtering
 - Predictive search
-- Review class names on all exisiting code
-- Go through each template file - https://shopify.dev/docs/storefronts/themes/architecture/templates
 - Multiple currencies/markets
-- Review all Dawn settings to see what we might want
 - See how apps work with in general
+
+# Templates https://shopify.dev/docs/storefronts/themes/architecture/templates
+
+- Search
+- Product
+- Password
+- Page
+- Collection List
+- Collection
+- Cart
+- Blog
+- Article
+- 404
+- Gift Card
+
+# Sections
+
+- Cart drawer (should css/js go in global?)
+- Announcement bar
+
+# Various
+
+- Multi variant images
+- Discount codes support in carts
+- Quick add on collection pages 
+- Review all Dawn settings to see what we might want
 - Theme Blocks https://shopify.dev/docs/storefronts/themes/architecture/blocks/theme-blocks/quick-start?framework=liquid (deal with custom-section.liquid & blocks folder)
 - Modify readme
 - Work on performance
 - html validation
 - Custom solution for product gallery instead of swiper?
 - Make sure all section previews work
-- Image sizes attributes
 - Remove comments from main layout file?
-- Add title elements to svg's
 - Themecheck workflow not working
 - Decide whether or not to use the main layout grid in critical.css
 - Compare at prices
 - Responsive cart drawer styles
 - Work on accessability
-
-# Implement more fully
-
-- Cart drawer (basic styles - quantity update & delete functionality)
-- Password page
