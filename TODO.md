@@ -5,8 +5,8 @@
 - Password
 - Collection List
 - Collection
-- Cart
 
+- Cart
 - Blog
 - Article
 - 404
@@ -15,8 +15,7 @@
 
 # MVP 
 
-- Multi variant images
-- Responsive images (article, blog) - need to take site width into account
+- Responsive images (article, blog) - need to take site width into account - preload pdp images
 - Make sure all section previews work
 - Responsive cart drawer styles
 

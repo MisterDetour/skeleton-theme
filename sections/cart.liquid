@@ -1,27 +1,83 @@
 <main class="cart-main">
   <h1>{{ 'cart.title' | t }}</h1>
 
-  <form action="{{ routes.cart_url }}" method="post">
-    <table class="cart-table">
-      {% for item in cart.items %}
-        <tr>
-          <td class="cart-table-image">
-            {% render 'image', image: item.image, url: item.url %}
-          </td>
-          <td>
-            <p>{{ item.product.title }}</p>
-            {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-          </td>
-          <td>
-            <input type="text" name="updates[]" value="{{ item.quantity }}">
-            <input type="submit" value="{{ 'cart.update' | t }}">
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
+  {% if cart.item_count > 0 %}
+    <form action="{{ routes.cart_url }}" method="post" class="cart-form">
+      <table class="cart-table">
+        <thead>
+          <tr class="cart-table-row-head">
+            <th colspan="2">{{ 'cart.product' | t }}</th>
+            <th class="hide-sm">{{ 'cart.quantity' | t }}</th>
+            <th>{{ 'cart.subtotal' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart.items %}
+            <tr class="cart-table-row" data-key="{{ item.key }}">
+              <td class="cart-table-image">
+                {% render 'image', image: item.image, url: item.url %}
+              </td>
+              <td class="cart-table-product">
+                <p>{{ item.product.title }}</p>
+                {% if item.product.has_only_default_variant == false %}
+                  {% for option in item.options_with_values %}
+                    <p class="cart-table-option">{{ option.name }}: {{ option.value }}</p>
+                  {% endfor %}
+                {% endif %}
+                <div class="cart-table-item-price">{{ item.line_price | money }}</div>
+              </td>
+              <td class="cart-table-actions">
+                <div class="cart-item-actions">
+                  <div class="cart-item-quantity" aria-label="Quantity selector for {{ item.product.title | escape }}">
+                    <button
+                      type="button"
+                      class="cart-item-qty-button"
+                      data-delta="-1"
+                      data-key="{{ item.key }}"
+                      aria-label="Decrease quantity for {{ item.product.title | escape }}"
+                    >
+                      −
+                    </button>
+                    <span class="cart-item-quantity-value" aria-live="polite">{{ item.quantity }}</span>
+                    <button
+                      type="button"
+                      class="cart-item-qty-button"
+                      data-delta="1"
+                      data-key="{{ item.key }}"
+                      aria-label="Increase quantity for {{ item.product.title | escape }}"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    class="cart-item-remove btn-reset"
+                    data-key="{{ item.key }}"
+                    aria-label="Remove item"
+                  >
+                    {{ 'icon-trash.svg' | inline_asset_content }}
+                  </button>
+                </div>
+              </td>
+              <td class="cart-table-line-price">
+                <div class="cart-table-item-line-price">{{ item.line_price | money }}</div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
-    <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-  </form>
+      <div class="cart-footer">
+        <div class="cart-footer-subtotal">{{ 'cart.total' | t }}: {{ cart.total_price | money }}</div>
+        <div class="cart-footer-calc">{{ 'cart.calculate' | t }}</div>
+        <div class="cart-footer-actions">
+          <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}" class="btn">
+        </div>
+      </div>
+    </form>
+  {% else %}
+    <p>{{ 'cart.empty' | t }}</p>
+  {% endif %}
 </main>
 
 {% stylesheet %}
@@ -31,10 +87,310 @@
     margin-top: 1rem;
   }
 
+  .cart-table th {
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .cart-table-row-head {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .cart-table-row {
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .cart-table-row {
+      display: grid;
+      grid-template: repeat(2, auto) / repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+  }
+
   .cart-table-image {
     width: 10rem;
+    padding: 1rem 1rem 1rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .cart-table-image {
+      grid-row: 1 / 3;
+    }
+  }
+
+  .cart-table-product {
+    padding: 1rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .cart-table-product {
+      grid-column: 2 / 4;
+    }
+  }
+
+  .cart-table-option {
+    margin: 0.2rem 0;
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  .cart-table-item-price {
+    margin-top: 1rem;
+  }
+
+  .cart-table-actions {
+    padding: 1rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .cart-table-actions {
+      grid-column: 2 / 4;
+    }
+  }
+
+  .cart-item-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  @media (min-width: 769px) {
+    .cart-item-actions {
+      flex-direction: row;
+    }
+  }
+
+  .cart-item-quantity {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.6rem;
+    border: 0.1rem solid rgba(0, 0, 0, 0.15);
+    border-radius: 999rem;
+  }
+
+  .cart-item-qty-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+
+  .cart-item-quantity-value {
+    min-width: 2rem;
+    text-align: center;
+  }
+
+  .cart-item-remove {
+    display: inline-block;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    width: 3rem;
+  }
+
+  .cart-table-line-price {
+    padding: 1rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .cart-table-line-price {
+      display: flex;
+      grid-column: 4 / 5;
+      grid-row: 1;
+    }
+  }
+
+  .cart-footer {
+    display: grid;
+    justify-content: flex-end;
+    text-align: right;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .cart-footer-calc {
+    font-size: 1.2rem;
+  }
+
+  .cart-footer-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .cart-table-item-line-price.is-loading {
+    position: relative;
+    color: transparent;
+  }
+
+  .cart-table-item-line-price.is-loading::before {
+    content: '';
+    display: block;
+    width: 1.8rem;
+    height: 1.8rem;
+    border: 0.2rem solid rgba(0, 0, 0, 0.15);
+    border-top-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    animation: cart-spin 0.7s linear infinite;
+  }
+
+  @keyframes cart-spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', () => {
+    const refreshCartSection = async () => {
+      try {
+        const response = await fetch('/?sections=cart');
+        if (!response.ok) throw new Error('Unable to refresh cart section.');
+
+        const data = await response.json();
+        const sectionHtml = data.cart;
+
+        if (!sectionHtml) return;
+
+        const parser = new DOMParser();
+        const parsedHtml = parser.parseFromString(sectionHtml, 'text/html');
+        const cartMain = parsedHtml.querySelector('.cart-main');
+        const cartMainTarget = document.querySelector('.cart-main');
+
+        if (cartMain && cartMainTarget) {
+          cartMainTarget.innerHTML = cartMain.innerHTML;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const refreshCartCounts = async () => {
+      try {
+        const response = await fetch('/cart.js');
+        if (!response.ok) throw new Error('Unable to refresh cart count.');
+
+        const cart = await response.json();
+        const updateTargets = document.querySelectorAll('.cart-item-count');
+
+        updateTargets.forEach((target) => {
+          target.textContent = cart.item_count;
+          if (cart.item_count > 0) {
+            target.classList.remove('hidden');
+          } else {
+            target.classList.add('hidden');
+          }
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    document.addEventListener('click', async (event) => {
+      const removeButton = event.target.closest('.cart-item-remove');
+
+      if (removeButton) {
+        const itemKey = removeButton.dataset.key;
+        const cartRow = removeButton.closest('.cart-table-row');
+        const linePrice = cartRow ? cartRow.querySelector('.cart-table-item-line-price') : null;
+
+        if (linePrice) {
+          linePrice.classList.add('is-loading');
+          linePrice.setAttribute('aria-busy', 'true');
+        }
+
+        try {
+          const response = await fetch('/cart/change.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            },
+            body: new URLSearchParams({
+              id: itemKey,
+              quantity: 0,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Unable to remove item.');
+          }
+
+          await refreshCartSection();
+          await refreshCartCounts();
+        } catch (error) {
+          console.error(error);
+          if (linePrice) {
+            linePrice.classList.remove('is-loading');
+            linePrice.removeAttribute('aria-busy');
+          }
+          alert('There was a problem removing this item. Please try again.');
+        }
+
+        return;
+      }
+
+      const button = event.target.closest('.cart-item-qty-button');
+
+      if (!button) return;
+
+      const itemKey = button.dataset.key;
+      const delta = Number(button.dataset.delta);
+      const cartRow = button.closest('.cart-table-row');
+      const linePrice = cartRow ? cartRow.querySelector('.cart-table-item-line-price') : null;
+      const quantityContainer = button.closest('.cart-item-quantity');
+      const quantityValue = quantityContainer ? quantityContainer.querySelector('.cart-item-quantity-value') : null;
+      const currentQuantity = quantityValue ? Number(quantityValue.textContent.trim()) : 0;
+      const updatedQuantity = Math.max(0, currentQuantity + delta);
+
+      if (linePrice) {
+        linePrice.classList.add('is-loading');
+        linePrice.setAttribute('aria-busy', 'true');
+      }
+
+      try {
+        const response = await fetch('/cart/change.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          },
+          body: new URLSearchParams({
+            id: itemKey,
+            quantity: updatedQuantity,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Unable to update quantity.');
+        }
+
+        await refreshCartSection();
+        await refreshCartCounts();
+      } catch (error) {
+        console.error(error);
+        if (linePrice) {
+          linePrice.classList.remove('is-loading');
+          linePrice.removeAttribute('aria-busy');
+        }
+        alert('There was a problem updating the quantity. Please try again.');
+      }
+    });
+  });
+{% endjavascript %}
 
 {% schema %}
 {

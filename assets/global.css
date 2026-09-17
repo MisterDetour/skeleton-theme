@@ -269,6 +269,7 @@ body {
   text-decoration: none;
   padding: 1rem;
   border-radius: var(--border-radius-buttons);
+  cursor: pointer;
 }
 
 /* --------------- Utility Classes --------------- */

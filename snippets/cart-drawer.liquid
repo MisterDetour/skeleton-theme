@@ -67,13 +67,13 @@
           {% endfor %}
         </ul>
       {% else %}
-        <p>Your cart is empty.</p>
+        <p>{{ 'cart.empty' | t }}</p>
       {% endif %}
     </div>
     <div class="cart-drawer-footer">
       {% if cart.item_count > 0 %}
-        <p>Subtotal: {{ cart.total_price | money }}</p>
-        <a href="/checkout" class="cart-drawer-checkout btn">Checkout</a>
+        <p>{{ 'cart.subtotal' | t }}: {{ cart.total_price | money }}</p>
+        <a href="/checkout" class="cart-drawer-checkout btn">{{ 'cart.checkout' | t }}</a>
       {% endif %}
     </div>
   </div>

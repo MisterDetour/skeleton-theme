@@ -14,10 +14,16 @@
     "comment_form_title": "Add a comment"
   },
   "cart": {
+    "calculate": "Taxes, discounts and shipping calculated at checkout.",
     "checkout": "Checkout",
+    "empty": "Your cart is empty.",
+    "product": "Product",
+    "quantity": "Quantity",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
     "title": "Your Cart",
-    "update": "Update",
-    "remove": "Remove"
+    "total": "Estimated total",
+    "update": "Update"
   },
   "customers": {
     "login": {
