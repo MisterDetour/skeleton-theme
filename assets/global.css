@@ -103,6 +103,25 @@ body {
   grid-column: 1 / -1;
 }
 
+/* --------------- Accessibility Skip Link --------------- */
+
+.skip-to-content {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background: var(--color-foreground);
+  color: var(--color-background);
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+}
+
 /* --------------- Site Header --------------- */
 
 .site-header {
