@@ -1,5 +1,5 @@
 ---
-name: shopify-variant-image-gallery
+name: multi-variant-images
 description: "Use when: implementing Shopify product galleries that switch by variant, using variant metafields with product-image fallback, and hide/show or Swiper logic in a Shopify theme."
 ---
 
