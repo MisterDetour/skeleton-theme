@@ -37,6 +37,7 @@
   "labels": {
     "alignment": "Alignment",
     "background": "Background",
+    "button_corner_radius": "Button corner radius",
     "foreground": "Foreground",
     "grid_gap": "Grid spacing",
     "grid_item_width": "Grid item width",

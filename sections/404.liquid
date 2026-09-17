@@ -1,12 +1,26 @@
-<h1>{{ '404.title' | t }}</h1>
+<main class="not-found-main">
+  <h1>{{ '404.title' | t }}</h1>
 
-<p>
-  {{ '404.not_found' | t }}
-</p>
+  <p>
+    {{ '404.not_found' | t }}
+  </p>
 
-<a href="{{ routes.all_products_collection_url }}">
-  {{ '404.back_to_shopping' | t }}
-</a>
+  <a href="{{ routes.all_products_collection_url }}" class="btn">
+    {{ '404.back_to_shopping' | t }}
+  </a>
+</main>
+
+{% stylesheet %}
+  .not-found-main {
+    display: grid;
+    gap: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    padding: 3rem;
+    min-height: 30rem;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

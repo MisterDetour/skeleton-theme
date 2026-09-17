@@ -1,4 +1,24 @@
+# Templates https://shopify.dev/docs/storefronts/themes/architecture/templates
 
+- Search
+- Product
+- Password
+- Collection List
+- Collection
+- Cart
+
+- Blog
+- Article
+- 404
+- Gift Card
+- Page
+
+# MVP 
+
+- Multi variant images
+- Responsive images (article, blog) - need to take site width into account
+- Make sure all section previews work
+- Responsive cart drawer styles
 
 # Complex Functionality
 
@@ -7,20 +27,6 @@
 - Predictive search
 - Multiple currencies/markets
 - Subscription app support
-
-# Templates https://shopify.dev/docs/storefronts/themes/architecture/templates
-
-- Search
-- Product
-- Password
-- Page
-- Collection List
-- Collection
-- Cart
-- Blog
-- Article
-- 404
-- Gift Card
 
 # Sections
 
@@ -33,7 +39,6 @@
 - Add to cart errors should be show on page rather than in js alert
 - Potential global js - header.liquid
 - Replace icons with consistent library
-- Multi variant images
 - Discount codes support in carts
 - Quick add on collection pages 
 - Review all Dawn settings to see what we might want

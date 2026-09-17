@@ -1,24 +1,50 @@
-<h1>{{ blog.title }}</h1>
+<main class="blog-main">
+  <h1>{{ blog.title }}</h1>
 
-{% paginate blog.articles by 5 %}
-  {% for article in blog.articles %}
-    <div>
-      {% if article.image %}
-        {{ article.image | image_url: width: 1000 | image_tag }}
-      {% endif %}
-      <h2>
-        {{ article.title | link_to: article.url }}
-      </h2>
-      {% assign date = article.published_at | time_tag: format: 'date' %}
-      <p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
-      <p>{{ article.excerpt }}</p>
-    </div>
-  {% endfor %}
+  <div class="blog-grid">
+    {% paginate blog.articles by 5 %}
+      {% for article in blog.articles %}
+        <article class="blog-grid-article">
+          {% if article.image %}
+            {{ article.image | image_url: width: 1000 | image_tag | link_to: article.url }}
+          {% endif %}
+          <h2>
+            {{ article.title | link_to: article.url }}
+          </h2>
+          {% assign date = article.published_at | time_tag: format: 'date' %}
+          <p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
+          {% if article.excerpt != blank %}
+            <p>{{ article.excerpt }}</p>
+          {% else -%}
+            <p>{{ article.content | strip_html | truncate: 200 }}</p>
+          {% endif %}
+        </article>
+      {% endfor %}
 
-  {%- if paginate.pages > 1 -%}
-    {{- paginate | default_pagination -}}
-  {%- endif -%}
-{% endpaginate %}
+      {%- if paginate.pages > 1 -%}
+        {{- paginate | default_pagination -}}
+      {%- endif -%}
+    {% endpaginate %}
+  </div>
+</main>
+
+{% stylesheet %}
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 1rem;
+  }
+
+  .blog-grid-article {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .blog-grid-article a {
+    text-decoration: none;
+    color: inherit;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

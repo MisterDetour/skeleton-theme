@@ -77,6 +77,16 @@
         "unit": "px",
         "label": "t:labels.input_corner_radius",
         "default": 4
+      }, 
+      {
+        "type": "range",
+        "id": "button_corner_radius",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "px",
+        "label": "t:labels.button_corner_radius",
+        "default": 4
       }
     ]
   },

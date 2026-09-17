@@ -35,7 +35,7 @@ input,
 textarea,
 select {
   font: inherit;
-  border-radius: var(--style-border-radius-inputs);
+  border-radius: var(--border-radius-inputs);
 }
 
 select {
@@ -233,6 +233,20 @@ body {
 .footer-payment {
   display: flex;
   gap: 1rem;
+}
+
+/* --------------- Buttons --------------- */
+
+.btn {
+  padding: 0;
+  border: none;
+  appearance: none;
+  background: none;
+  background: var(--color-foreground);
+  color: var(--color-background);
+  text-decoration: none;
+  padding: 1rem;
+  border-radius: var(--border-radius-buttons);
 }
 
 /* --------------- Utility Classes --------------- */
