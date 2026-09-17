@@ -57,12 +57,14 @@
       navMenu.setAttribute('aria-hidden', 'false');
       navToggle?.setAttribute('aria-expanded', 'false');
       document.body.classList.remove('overflow-hidden');
+      navMenu.classList.remove('anim-ready');
       return;
     }
 
     navMenu.setAttribute('aria-hidden', String(!isOpen));
     navToggle?.setAttribute('aria-expanded', String(isOpen));
     document.body.classList.toggle('overflow-hidden', isOpen);
+    navMenu.classList.add('anim-ready');
   }
 
   if (navToggle && navMenu) {
