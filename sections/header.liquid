@@ -11,16 +11,22 @@
     {{ shop.name | link_to: routes.root_url }}
   </{{ head_tag }}>
 
-  <div class="site-nav">
+  <nav class="site-nav" aria-label="Main navigation" aria-hidden="false">
     <ul class="site-nav-menu list-reset">
       {% for link in section.settings.menu.links %}
         <li>{{ link.title | link_to: link.url }}</li>
       {% endfor %}
     </ul>
-  </div>
+  </nav>
 
   <div class="site-header-icons">
-    <button class="site-nav-toggle btn-reset">
+    <button
+      class="site-nav-toggle btn-reset"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav-menu"
+      aria-label="Toggle navigation"
+    >
       {{ 'icon-menu.svg' | inline_asset_content }}
       {{ 'icon-close.svg' | inline_asset_content }}
     </button>
@@ -40,10 +46,36 @@
 
 <script>
   // Mobile menu toggle
-  document.querySelector('.site-nav-toggle').addEventListener('click', function () {
-    document.querySelector('.site-nav').classList.toggle('open');
-    document.querySelector('body').classList.toggle('overflow-hidden');
-  });
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const navMenu = document.querySelector('.site-nav');
+  const mobileQuery = window.matchMedia('(max-width: 768px)');
+
+  function updateMenuAccessibility() {
+    const isOpen = navMenu.classList.contains('open');
+
+    if (!mobileQuery.matches) {
+      navMenu.setAttribute('aria-hidden', 'false');
+      navToggle?.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+      return;
+    }
+
+    navMenu.setAttribute('aria-hidden', String(!isOpen));
+    navToggle?.setAttribute('aria-expanded', String(isOpen));
+    document.body.classList.toggle('overflow-hidden', isOpen);
+  }
+
+  if (navToggle && navMenu) {
+    updateMenuAccessibility();
+
+    navToggle.addEventListener('click', function () {
+      const isOpen = navMenu.classList.toggle('open');
+      updateMenuAccessibility();
+      document.body.classList.toggle('overflow-hidden', isOpen && mobileQuery.matches);
+    });
+
+    window.addEventListener('resize', updateMenuAccessibility);
+  }
 </script>
 
 {% schema %}
