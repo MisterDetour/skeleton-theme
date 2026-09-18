@@ -18,7 +18,29 @@
 
               <div class="cart-drawer-item-meta">
                 <h3>{{ item.product.title }}</h3>
-                <p>{{ item.price | money }}</p>
+
+                <div class="cart-drawer-item-price">
+                  <div>
+                    {% if item.original_price > item.final_price %}
+                      <s>{{ item.original_price | money }}</s>
+                    {% endif %}
+
+                    {{ item.final_price | money }}
+                  </div>
+                  <div>
+                    {% if item.line_level_discount_allocations.size > 0 %}
+                      <ul class="cart-drawer-item-discounts list-reset">
+                        {% for discount_allocation in item.line_level_discount_allocations %}
+                          <li class="cart-drawer-item-discount">
+                            {{ 'icon-discount.svg' | inline_asset_content }}
+                            {{ discount_allocation.discount_application.title }}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                </div>
+
                 <div class="cart-drawer-item-options">
                   {%- for option in item.options_with_values -%}
                     <dl class="cart-drawer-item-option">
@@ -27,44 +49,53 @@
                     </dl>
                   {%- endfor -%}
                 </div>
-                <div
-                  class="cart-drawer-item-quantity"
-                  aria-label="Quantity selector for {{ item.product.title | escape }}"
-                >
+                <div class="cart-drawer-item-actions">
+                  <div
+                    class="cart-drawer-item-quantity"
+                    aria-label="Quantity selector for {{ item.product.title | escape }}"
+                  >
+                    <button
+                      type="button"
+                      class="cart-drawer-item-qty-button"
+                      data-delta="-1"
+                      data-key="{{ item.key }}"
+                      aria-label="Decrease quantity for {{ item.product.title | escape }}"
+                    >
+                      −
+                    </button>
+                    <span class="cart-drawer-item-quantity-value" aria-live="polite">{{ item.quantity }}</span>
+                    <button
+                      type="button"
+                      class="cart-drawer-item-qty-button"
+                      data-delta="1"
+                      data-key="{{ item.key }}"
+                      aria-label="Increase quantity for {{ item.product.title | escape }}"
+                    >
+                      +
+                    </button>
+                  </div>
                   <button
                     type="button"
-                    class="cart-drawer-item-qty-button"
-                    data-delta="-1"
+                    class="cart-drawer-item-remove btn-reset"
                     data-key="{{ item.key }}"
-                    aria-label="Decrease quantity for {{ item.product.title | escape }}"
+                    aria-label="Remove item"
                   >
-                    −
-                  </button>
-                  <span class="cart-drawer-item-quantity-value" aria-live="polite">{{ item.quantity }}</span>
-                  <button
-                    type="button"
-                    class="cart-drawer-item-qty-button"
-                    data-delta="1"
-                    data-key="{{ item.key }}"
-                    aria-label="Increase quantity for {{ item.product.title | escape }}"
-                  >
-                    +
+                    {{ 'icon-trash.svg' | inline_asset_content }}
                   </button>
                 </div>
-                <button
-                  type="button"
-                  class="cart-drawer-item-remove btn-reset"
-                  data-key="{{ item.key }}"
-                  aria-label="Remove item"
-                >
-                  {{ 'icon-trash.svg' | inline_asset_content }}
-                </button>
               </div>
               <div class="cart-drawer-item-line-price">
-                {{ item.line_price | money }}
+                <div>
+                  {% if item.original_line_price > item.final_line_price %}
+                    <s>{{ item.original_line_price | money }}</s>
+                  {% endif %}
+                </div>
+                <div>
+                  {{ item.final_line_price | money }}
+                </div>
               </div>
             </li>
-          {% endfor %}
+          {%- endfor %}
         </ul>
       {% else %}
         <p>{{ 'cart.empty' | t }}</p>
@@ -144,6 +175,44 @@
     gap: 1rem;
   }
 
+  .cart-drawer-item-meta {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .cart-drawer-item h3 {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+
+  .cart-drawer-item-price {
+    font-size: 1.4rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .cart-drawer-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .cart-drawer .icon-discount {
+    width: 1.2rem;
+  }
+
+  .cart-drawer-item-discount {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1.2rem;
+  }
+
+  .cart-drawer s {
+    opacity: 0.8;
+    font-size: 1.2rem;
+  }
+
   .cart-drawer-item-options {
     font-size: 1.2rem;
   }
@@ -183,16 +252,14 @@
   }
 
   .cart-drawer-item-remove {
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
   }
 
   .cart-drawer-item-line-price {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 7rem;
-    min-height: 3rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .cart-drawer-item-line-price.is-loading {

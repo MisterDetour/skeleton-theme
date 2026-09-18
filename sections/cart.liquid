@@ -80,7 +80,16 @@
                 </div>
               </td>
               <td class="cart-table-line-price">
-                <div class="cart-table-item-line-price">{{ item.line_price | money }}</div>
+                <div class="cart-table-item-line-price">
+                  <div>
+                    {% if item.original_line_price > item.final_line_price %}
+                      <s>{{ item.original_line_price | money }}</s>
+                    {% endif %}
+                  </div>
+                  <div>
+                    {{ item.final_line_price | money }}
+                  </div>
+                </div>
               </td>
             </tr>
           {% endfor %}
@@ -89,6 +98,18 @@
 
       <div class="cart-footer">
         <div class="cart-footer-subtotal">{{ 'cart.total' | t }}: {{ cart.total_price | money }}</div>
+        <div>
+          {% if cart.cart_level_discount_applications.size > 0 %}
+            <ul class="cart-footer-discounts list-reset">
+              {% for discount_application in cart.cart_level_discount_applications %}
+                <li class="cart-footer-discount">
+                  {{ 'icon-discount.svg' | inline_asset_content }}
+                  {{ discount_application.title }} (-{{ discount_application.total_allocated_amount | money }})
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
         <div class="cart-footer-calc">{{ 'cart.calculate' | t }}</div>
         <div class="cart-footer-actions">
           <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}" class="btn">
@@ -151,14 +172,19 @@
     }
   }
 
-  .cart-table-product .icon-discount {
-    width: 1rem;
+  .cart-main .icon-discount {
+    width: 1.2rem;
   }
 
   .cart-table-item-discount {
     display: flex;
     align-items: center;
     gap: 0.4rem;
+  }
+
+  .cart-table s {
+    opacity: 0.8;
+    font-size: 1.4rem;
   }
 
   .cart-table-option {
@@ -249,6 +275,18 @@
     text-align: right;
     gap: 1rem;
     margin-top: 2rem;
+  }
+
+  .cart-footer-discounts {
+    display: flex;
+    justify-content: flex-end;
+    opacity: 0.8;
+    font-size: 1.4rem;
+  }
+
+  .cart-footer-discount {
+    display: flex;
+    gap: 0.4rem;
   }
 
   .cart-footer-calc {

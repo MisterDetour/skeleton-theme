@@ -20,6 +20,7 @@
 - Responsive images (article, blog) - need to take site width into account - preload pdp images
 - Make sure all section previews work
 - Responsive cart drawer styles
+- If you quickly update the quantity twice it fails
 
 # Complex Functionality
 
