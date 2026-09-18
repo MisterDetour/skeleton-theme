@@ -16,7 +16,6 @@
 # MVP 
 
 - Compare at prices
-- Coupons
 - Responsive images (article, blog) - need to take site width into account - preload pdp images
 - Make sure all section previews work
 - Responsive cart drawer styles

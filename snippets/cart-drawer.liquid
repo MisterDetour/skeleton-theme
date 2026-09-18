@@ -102,10 +102,24 @@
       {% endif %}
     </div>
     <div class="cart-drawer-footer">
-      {% if cart.item_count > 0 %}
-        <p>{{ 'cart.subtotal' | t }}: {{ cart.total_price | money }}</p>
-        <a href="/checkout" class="cart-drawer-checkout btn">{{ 'cart.checkout' | t }}</a>
-      {% endif %}
+      <div>
+        {% if cart.cart_level_discount_applications.size > 0 %}
+          <ul class="cart-drawer-footer-discounts list-reset">
+            {% for discount_application in cart.cart_level_discount_applications %}
+              <li class="cart-drawer-footer-discount">
+                {{ 'icon-discount.svg' | inline_asset_content }}
+                {{ discount_application.title }} (-{{ discount_application.total_allocated_amount | money }})
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+      <div class="cart-drawer-footer-totals">
+        {% if cart.item_count > 0 %}
+          <span>{{ 'cart.subtotal' | t }}:</span> <span>{{ cart.total_price | money }}</span>
+        {% endif %}
+      </div>
+      <a href="/checkout" class="cart-drawer-btn btn">{{ 'cart.checkout' | t }}</a>
     </div>
   </div>
 </div>
@@ -201,7 +215,8 @@
     width: 1.2rem;
   }
 
-  .cart-drawer-item-discount {
+  .cart-drawer-item-discount,
+  .cart-drawer-footer-discount {
     display: flex;
     align-items: center;
     gap: 0.4rem;
@@ -285,12 +300,22 @@
   }
 
   .cart-drawer-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 1rem 0;
     margin-top: 1rem;
     border-top: 0.1rem solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cart-drawer-footer-totals {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cart-drawer-btn {
+    width: 100%;
+    text-align: center;
   }
 {% endstyle %}
 
