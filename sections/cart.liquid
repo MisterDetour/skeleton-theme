@@ -24,7 +24,27 @@
                     <p class="cart-table-option">{{ option.name }}: {{ option.value }}</p>
                   {% endfor %}
                 {% endif %}
-                <div class="cart-table-item-price">{{ item.line_price | money }}</div>
+                <div class="cart-table-item-price">
+                  <div>
+                    {% if item.original_price > item.final_price %}
+                      <s>{{ item.original_price | money }}</s>
+                    {% endif %}
+
+                    {{ item.final_price | money }}
+                  </div>
+                  <div>
+                    {% if item.line_level_discount_allocations.size > 0 %}
+                      <ul class="cart-table-item-discounts list-reset">
+                        {% for discount_allocation in item.line_level_discount_allocations %}
+                          <li class="cart-table-item-discount">
+                            {{ 'icon-discount.svg' | inline_asset_content }}
+                            {{ discount_allocation.discount_application.title }}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                </div>
               </td>
               <td class="cart-table-actions">
                 <div class="cart-item-actions">
@@ -129,6 +149,16 @@
     .cart-table-product {
       grid-column: 2 / 4;
     }
+  }
+
+  .cart-table-product .icon-discount {
+    width: 1rem;
+  }
+
+  .cart-table-item-discount {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
 
   .cart-table-option {
