@@ -17,7 +17,7 @@
       {
         "type": "font_picker",
         "id": "type_primary_font",
-        "default": "work_sans_n4",
+        "default": "assistant_n4",
         "label": "t:general.primary"
       }
     ]
@@ -67,6 +67,12 @@
         "id": "foreground_color",
         "default": "#333333",
         "label": "t:labels.foreground"
+      },
+      {
+        "type": "color",
+        "id": "border_color",
+        "default": "#B8B8B8",
+        "label": "t:labels.border_color"
       },
       {
         "type": "range",

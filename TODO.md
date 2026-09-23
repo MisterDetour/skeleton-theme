@@ -3,9 +3,9 @@
 - Search
 - Product
 - Password
+
 - Collection List
 - Collection
-
 - Cart
 - Blog
 - Article
@@ -15,13 +15,16 @@
 
 # MVP 
 
+- Password page subscribe form validation and testing
+- Add pagination and filters to collection page
 - Compare at prices
 - Responsive images (article, blog) - need to take site width into account - preload pdp images
 - Make sure all section previews work
-- Responsive cart drawer styles
+- Responsive cart drawer styles and better styles overall
 - If you quickly update the quantity twice it fails
+- Form spam protection?
 
-# Complex Functionality
+# Complex Functionality - create skills for
 
 - Color swatches
 - Category filtering

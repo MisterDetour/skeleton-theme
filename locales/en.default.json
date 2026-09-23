@@ -44,9 +44,11 @@
     "use_at_checkout": "Use this gift card at checkout"
   },
   "password": {
-    "title": "This shop is private",
+    "email": "Email",
+    "enter": "Enter using password",
+    "title": "Opening soon",
     "password": "Password",
-    "enter": "Enter"
+    "submit": "Enter"
   },
   "search": {
     "title": "Search",

@@ -103,23 +103,15 @@ body {
   grid-column: 1 / -1;
 }
 
-/* --------------- Accessibility Skip Link --------------- */
-
-.skip-to-content {
-  position: absolute;
-  left: 1rem;
-  top: -4rem;
-  z-index: 1000;
-  padding: 0.75rem 1rem;
-  background: var(--color-foreground);
-  color: var(--color-background);
-  text-decoration: none;
-  border-radius: 0.25rem;
-  transition: top 0.2s ease;
-}
-
-.skip-to-content:focus {
-  top: 1rem;
+/* --------------- Headings --------------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+  margin: 0 0 1.5rem;
 }
 
 /* --------------- Site Header --------------- */
@@ -131,6 +123,10 @@ body {
   justify-content: space-between;
   position: relative;
   z-index: 2;
+}
+
+.site-header h1 {
+  margin: 0;
 }
 
 .site-header a {
@@ -279,12 +275,18 @@ body {
   border: none;
   appearance: none;
   background: none;
+  cursor: pointer;
 }
 
 .list-reset {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.link-reset {
+  text-decoration: none;
+  color: inherit;
 }
 
 .overflow-hidden {
@@ -305,4 +307,62 @@ body {
   .hide-md {
     display: none;
   }
+}
+
+/* --------------- Accessibility Skip Link --------------- */
+
+.skip-to-content {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  background: var(--color-foreground);
+  color: var(--color-background);
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+}
+
+/* --------------- Forms --------------- */
+
+.form-group {
+  position: relative;
+}
+
+.form-group-label {
+  position: absolute;
+  left: 1.5rem;
+  top: 1rem;
+  transition:
+    top 0.1s ease,
+    font-size 0.1s ease;
+}
+
+.form-group-input {
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-inputs);
+  padding: 1.5rem 1.5rem 0.5rem;
+  width: 100%;
+}
+
+.form-group-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.1rem var(--color-foreground);
+  border-color: var(--color-foreground);
+}
+
+.form-group-input:focus ~ .form-group-label,
+.form-group-input:not(:placeholder-shown) ~ .form-group-label,
+.form-group-input:-webkit-autofill ~ .form-group-label {
+  font-size: 0.9rem;
+  top: 0.5rem;
+}
+
+.form-group ::placeholder {
+  opacity: 0;
 }

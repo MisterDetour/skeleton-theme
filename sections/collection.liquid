@@ -15,8 +15,10 @@
             %}
           {% endif %}
           <div class="collection-product-content">
-            <p>{{ product.title | escape | link_to: product.url }}</p>
-            <p>{{ product.price | money }}</p>
+            <h2 class="collection-product-title">
+              <a href="{{ product.url }}" class="link-reset">{{ product.title | escape }}</a>
+            </h2>
+            <div>{{ product.price | money }}</div>
           </div>
         </div>
       {% endfor %}
@@ -29,7 +31,22 @@
 {% stylesheet %}
   .collection-products {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .collection-product {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .collection-product-content {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .collection-product-title {
+    font-size: 1.6rem;
   }
 {% endstylesheet %}
 

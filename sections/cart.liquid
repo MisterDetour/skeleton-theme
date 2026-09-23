@@ -139,7 +139,8 @@
     }
   }
 
-  .cart-table-row {
+  .cart-table-row,
+  .cart-table-row-head {
     border-bottom: 0.1rem solid rgba(0, 0, 0, 0.1);
   }
 
@@ -149,6 +150,11 @@
       grid-template: repeat(2, auto) / repeat(4, 1fr);
       gap: 0.5rem;
     }
+  }
+
+  .cart-table-row-head th {
+    font-weight: 400;
+    padding: 1rem 0;
   }
 
   .cart-table-image {

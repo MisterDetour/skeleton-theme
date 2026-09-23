@@ -12,8 +12,6 @@
     "main": {
       "type": "collections",
       "settings": {
-        "grid_item_width": "collections-compact",
-        "grid_gap": 10
       }
     }
   },
