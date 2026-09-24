@@ -51,8 +51,8 @@
     "submit": "Enter"
   },
   "search": {
-    "title": "Search",
-    "placeholder": "Search articles, pages, or products",
+    "title": "Search Results",
+    "placeholder": "Search",
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"

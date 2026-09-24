@@ -1,9 +1,9 @@
 # Templates https://shopify.dev/docs/storefronts/themes/architecture/templates
 
-- Search
 - Product
-- Password
+- Search
 
+- Password
 - Collection List
 - Collection
 - Cart
@@ -15,6 +15,7 @@
 
 # MVP 
 
+- Display active variant image in gallery
 - Password page subscribe form validation and testing
 - Add pagination and filters to collection page
 - Compare at prices

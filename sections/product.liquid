@@ -16,7 +16,7 @@
       <div class="swiper-wrapper">
         {% for image in product.images %}
           <div class="swiper-slide" data-index="{{ forloop.index0 }}">
-            {% render 'image', class: 'product-image', image: image, width: 200, height: 200 %}
+            {% render 'image', class: 'product-image', image: image, width: 400, height: 400, crop: 'center' %}
           </div>
         {% endfor %}
       </div>
@@ -33,7 +33,9 @@
           {%- when 'description' -%}
             <div class="product-description">{{ product.description }}</div>
           {%- when 'price' -%}
-            <div class="product-price">{{ product.selected_or_first_available_variant.price | money }}</div>
+            <div class="product-price">
+              <span>{{ product.selected_or_first_available_variant.price | money }}</span>
+            </div>
           {%- when 'form' -%}
             {% render 'product-form', product: product %}
           {%- when 'variant_selector' -%}
@@ -49,6 +51,12 @@
     display: grid;
     grid-template-columns: repeat(2, 50%);
     gap: 2rem;
+  }
+
+  .product-gallery .product-image > img {
+    width: auto;
+    max-height: 60rem;
+    margin: 0 auto;
   }
 
   .product-gallery-nav {
