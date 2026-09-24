@@ -33,9 +33,7 @@
           {%- when 'description' -%}
             <div class="product-description">{{ product.description }}</div>
           {%- when 'price' -%}
-            <div class="product-price">
-              <span>{{ product.selected_or_first_available_variant.price | money }}</span>
-            </div>
+            {% render 'price' %}
           {%- when 'form' -%}
             {% render 'product-form', product: product %}
           {%- when 'variant_selector' -%}
@@ -51,6 +49,17 @@
     display: grid;
     grid-template-columns: repeat(2, 50%);
     gap: 2rem;
+  }
+
+  .product-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .product-price-compare {
+    text-decoration: line-through;
+    opacity: 0.6;
   }
 
   .product-gallery .product-image > img {
@@ -106,8 +115,17 @@
     const productVariants = productData.variants || [];
 
     const variantSelect = document.querySelector('.product-form .product-variant-select');
-    const priceEl = document.querySelector('.product-price');
+    const priceCurrentEl = document.querySelector('.product-price-current');
+    const priceCompareEl = document.querySelector('.product-price-compare');
     const moneyFormat = productData.moneyFormat || '$';
+
+    function updateURLWithVariant(variantId) {
+      if (!variantId) return;
+
+      const url = new URL(window.location.href);
+      url.searchParams.set('variant', String(variantId));
+      window.history.replaceState({}, '', url);
+    }
 
     function formatMoney(cents) {
       if (window.Shopify && typeof Shopify.formatMoney === 'function') {
@@ -118,16 +136,31 @@
     }
 
     function updateProductPrice() {
-      if (!variantSelect || !priceEl) return;
+      if (!variantSelect || !priceCurrentEl) return;
 
       const selectedVariant = productVariants.find((variant) => Number(variant.id) === Number(variantSelect.value));
 
       if (!selectedVariant) return;
 
-      priceEl.textContent = formatMoney(selectedVariant.price);
+      priceCurrentEl.textContent = formatMoney(selectedVariant.price);
+
+      if (priceCompareEl) {
+        const hasComparePrice = Number(selectedVariant.compare_at_price || 0) > Number(selectedVariant.price || 0);
+
+        priceCompareEl.textContent = hasComparePrice ? formatMoney(selectedVariant.compare_at_price) : '';
+        priceCompareEl.hidden = !hasComparePrice;
+      }
+
+      updateURLWithVariant(selectedVariant.id);
     }
 
     if (variantSelect) {
+      const initialVariantId = new URLSearchParams(window.location.search).get('variant');
+
+      if (initialVariantId) {
+        variantSelect.value = String(initialVariantId);
+      }
+
       variantSelect.addEventListener('change', updateProductPrice);
     }
 
@@ -148,6 +181,7 @@
       if (!matchingVariant) return;
 
       variantSelect.value = String(matchingVariant.id);
+      updateURLWithVariant(matchingVariant.id);
       updateProductPrice();
     }
 
