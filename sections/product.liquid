@@ -37,8 +37,21 @@
               {%- when 'price' -%}
                 {% render 'price' %}
               {%- when 'buy_button' -%}
-                <div class="product-buy-button">
-                  <input type="submit" value="Add to cart" class="submit btn">
+                <div class="product-buy-button-wrap">
+                  <button
+                    type="submit"
+                    value="Add to cart"
+                    class="product-buy-button btn"
+                    {% if product.selected_or_first_available_variant.available == false %}
+                      disabled
+                    {% endif %}
+                  >
+                    {% if product.selected_or_first_available_variant.available == false %}
+                      Sold out
+                    {% else %}
+                      Add to cart
+                    {% endif %}
+                  </button>
                 </div>
               {%- when 'quantity' -%}
                 <input type="number" name="quantity" min="1" value="1">
@@ -161,12 +174,21 @@
       return '$' + (cents / 100).toFixed(2);
     }
 
-    function updateProductPrice() {
-      if (!variantSelect || !priceCurrentEl) return;
+    function updateBuyButtonState(selectedVariant) {
+      const buyButton = document.querySelector('.product-buy-button');
 
-      const selectedVariant = productVariants.find((variant) => Number(variant.id) === Number(variantSelect.value));
+      if (!buyButton) return;
 
-      if (!selectedVariant) return;
+      const isAvailable = !!selectedVariant && selectedVariant.available !== false;
+      const label = isAvailable ? 'Add to cart' : 'Sold out';
+
+      buyButton.disabled = !isAvailable;
+      buyButton.setAttribute('aria-disabled', String(!isAvailable));
+      buyButton.textContent = label;
+    }
+
+    function updatePriceDisplay(selectedVariant) {
+      if (!priceCurrentEl) return;
 
       priceCurrentEl.textContent = formatMoney(selectedVariant.price);
 
@@ -176,10 +198,21 @@
         priceCompareEl.textContent = hasComparePrice ? formatMoney(selectedVariant.compare_at_price) : '';
         priceCompareEl.hidden = !hasComparePrice;
       }
+    }
 
+    function updateVariantUI() {
+      if (!variantSelect) return;
+
+      const selectedVariant = productVariants.find((variant) => Number(variant.id) === Number(variantSelect.value));
+
+      if (!selectedVariant) return;
+
+      updateBuyButtonState(selectedVariant);
+      updatePriceDisplay(selectedVariant);
       updateURLWithVariant(selectedVariant.id);
     }
 
+    // Initialize variant selection based on URL parameter
     if (variantSelect) {
       const initialVariantId = new URLSearchParams(window.location.search).get('variant');
 
@@ -187,7 +220,8 @@
         variantSelect.value = String(initialVariantId);
       }
 
-      variantSelect.addEventListener('change', updateProductPrice);
+      updateVariantUI();
+      variantSelect.addEventListener('change', updateVariantUI);
     }
 
     // Update variant based on selected options
@@ -211,7 +245,7 @@
 
       variantSelect.value = String(matchingVariant.id);
       updateURLWithVariant(matchingVariant.id);
-      updateProductPrice();
+      updateVariantUI();
     }
 
     document.querySelectorAll('.product-option-input').forEach((input) => {

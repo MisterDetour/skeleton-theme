@@ -14,7 +14,6 @@
 
 # MVP 
 
-- Make sure pdp out of stock is working
 - Display active variant image in gallery
 - Password page subscribe form validation and testing
 - Add pagination and filters to collection page
