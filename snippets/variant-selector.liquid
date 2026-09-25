@@ -1,17 +1,75 @@
+{% assign selected_variant = product.selected_or_first_available_variant %}
+
 <div class="product-option">
   {%- for option in product.options -%}
-    <label for="option-{{ option | handleize }}">{{ option }}</label>
-    <select id="option-{{ option | handleize }}" name="option-{{ option | handleize }}" class="product-option-select">
-      {% for value in product.options_with_values[forloop.index0].values %}
-        <option value="{{ value }}">{{ value }}</option>
-      {% endfor %}
-    </select>
+    <div class="product-option-group" data-option-name="{{ option }}">
+      <label class="product-option-label" for="option-{{ option | handleize }}">{{ option }}</label>
+      <div class="product-option-values">
+        {% for value in product.options_with_values[forloop.index0].values %}
+          <input
+            type="radio"
+            id="option-{{ option | handleize }}-{{ forloop.index }}"
+            name="option-{{ option | handleize }}"
+            value="{{ value }}"
+            class="product-option-input"
+            {% if selected_variant.options[forloop.parentloop.index0] == value %}
+              checked
+            {% endif %}
+          >
+          <label
+            class="product-option-button"
+            for="option-{{ option | handleize }}-{{ forloop.index }}"
+          >
+            {{- value -}}
+          </label>
+        {% endfor %}
+      </div>
+    </div>
   {%- endfor -%}
 </div>
 
 {% stylesheet %}
   .product-option {
     display: grid;
+    gap: 1rem;
     justify-content: flex-start;
+  }
+
+  .product-option-group {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .product-option-values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .product-option-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .product-option-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    min-width: 4rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .product-option-input:checked + .product-option-button {
+    background: var(--color-foreground);
+    border-color: var(--color-foreground);
+    color: var(--color-background);
   }
 {% endstylesheet %}

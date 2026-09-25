@@ -2,7 +2,6 @@
 
 - Product
 - Search
-
 - Password
 - Collection List
 - Collection
@@ -15,6 +14,7 @@
 
 # MVP 
 
+- Make sure pdp out of stock is working
 - Display active variant image in gallery
 - Password page subscribe form validation and testing
 - Add pagination and filters to collection page
@@ -24,6 +24,7 @@
 - Responsive cart drawer styles and better styles overall
 - If you quickly update the quantity twice it fails
 - Form spam protection?
+- Go through all templates again
 
 # Complex Functionality - create skills for
 
@@ -32,6 +33,7 @@
 - Predictive search
 - Multiple currencies/markets
 - Subscription app support
+- Related products
 
 # Sections
 

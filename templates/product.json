@@ -16,10 +16,6 @@
           "type": "title",
           "settings": {}
         },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
         "price": {
           "type": "price",
           "settings": {}
@@ -28,17 +24,21 @@
           "type": "variant_selector",
           "settings": {}
         },
-        "form": {
-          "type": "form",
+        "button": {
+          "type": "buy_button",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
           "settings": {}
         }
       },
       "block_order": [
         "title",
-        "description",
         "price",
         "variant_selector",
-        "form"
+        "button", 
+        "description"
       ],
       "settings": {}
     }

@@ -92,7 +92,7 @@
         "step": 1,
         "unit": "px",
         "label": "t:labels.button_corner_radius",
-        "default": 4
+        "default": 0
       }
     ]
   },
